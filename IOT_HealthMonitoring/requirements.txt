@@ -1,0 +1,26 @@
+Libraries Required:
+ThingSpeak by MathWorks Verison 2.0.1
+DHT sensor library by Adafruit Version 1.4.3
+HX711 Arduino Library by Bogdan Necula Version 0.7.5
+Sparkfun MAX3010x Pulse and Proximity Sensor Library by SparkFun Electronics Version 1.1.2
+
+
+Additional Board Installation:
+http://arduino.esp8266.com/stable/package_esp8266com_index.json
+
+Additional header file (*.h):
+secrets.h <- contains WiFi SSID & Password credentials. Also required to fill in ThinkSpeak API Key and Channel number.
+
+
+Required information:
+line56: float calibration_factor = xxxxxxx ; // Calibrate scale according to desired value
+
+Upload Board Settings: 
+Tools > Board > ESP8266 Boards (3.0.2) > NodeMCU 1.0 (ESP-12E Module)
+
+/* PIN CONNECTION
+  MAX30102 -> [SCL -> D1], [SDA -> D2]
+  DHT22 -> [DATA -> D0]
+  LM35 -> [OUT -> A0]
+  HX711 -> [HX711_DOUT -> D5], [HX711_CLK -> D6]
+*/
