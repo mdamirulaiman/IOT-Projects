@@ -1,0 +1,4 @@
+[wokwi]
+version = 1
+firmware = '.pio\build\iot-water-tank-controller\firmware.bin'
+elf = '.pio\build\iot-water-tank-controller\firmware.elf'
