@@ -33,7 +33,9 @@
       "top": 281.54,
       "left": 57.83,
       "attrs": { "i2cAddress": "0x3c" }
-    }
+    },
+    { "type": "wokwi-relay-module", "id": "relay2", "top": 211.4, "left": 249.6, "attrs": {} },
+    { "type": "wokwi-relay-module", "id": "relay3", "top": 278.6, "left": 249.6, "attrs": {} }
   ],
   "connections": [
     [ "esp:TX", "$serialMonitor:RX", "", [] ],
@@ -42,15 +44,22 @@
     [ "ultrasonic1:GND", "esp:GND.1", "black", [ "v19.2", "h18" ] ],
     [ "ultrasonic1:TRIG", "esp:14", "orange", [ "v28.8", "h57.2" ] ],
     [ "esp:27", "ultrasonic1:ECHO", "gold", [ "v-95.85", "h-56.8" ] ],
-    [ "relay1:IN", "esp:25", "green", [ "h-19.2", "v-125", "h-153.6" ] ],
+    [ "relay1:IN", "esp:25", "green", [ "h-28.8", "v-125", "h-144" ] ],
     [ "relay1:VCC", "esp:5V", "red", [ "v-124.8", "h-268.8" ] ],
-    [ "relay1:GND", "esp:GND.1", "black", [ "h-9.6", "v-125.2", "h-211.2" ] ],
+    [ "relay1:GND", "esp:GND.1", "black", [ "h-19.2", "v-125.2", "h-201.6" ] ],
     [ "btn1:2.l", "esp:26", "blue", [ "v-19.2", "h-249.8" ] ],
     [ "oled1:GND", "esp:GND.3", "black", [ "v-38.4", "h9.6" ] ],
     [ "esp:22", "oled1:SCL", "gray", [ "v28.8", "h-19.2" ] ],
     [ "oled1:SDA", "esp:21", "white", [ "v-28.8", "h-19.13" ] ],
     [ "btn1:1.l", "esp:GND.1", "black", [ "v-28.8", "h-307.2" ] ],
-    [ "oled1:VCC", "esp:5V", "red", [ "v-19.2", "h-153.45", "v-172.8", "h28.8" ] ]
+    [ "oled1:VCC", "esp:5V", "red", [ "v-19.2", "h-153.45", "v-172.8", "h28.8" ] ],
+    [ "relay2:IN", "esp:33", "blue", [ "h-38.4", "v-182.6", "h-124.8" ] ],
+    [ "relay3:IN", "esp:32", "violet", [ "h-48", "v-240.2", "h-105.6" ] ],
+    [ "relay1:GND", "relay2:GND", "black", [ "h-19.2", "v67.2" ] ],
+    [ "relay2:GND", "relay3:GND", "black", [ "h-19.2", "v67.2" ] ],
+    [ "relay1:VCC", "relay2:VCC", "red", [ "h-9.6", "v67.2" ] ],
+    [ "relay3:VCC", "relay2:VCC", "red", [ "h-9.6", "v-67.2" ] ]
   ],
+  "serialMonitor": { "display": "always", "newline": "lf", "convertEol": false },
   "dependencies": {}
 }
