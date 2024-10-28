@@ -12,7 +12,9 @@
 #define LOWER_THRESHOLD 50  // Height of water in tank when it is LOW.
 #define UPPER_THRESHOLD 250 // Height of water in tank when it is FULL.
 #define BUTTON_PIN 26
-#define RELAY_PIN 25
+#define PUMP_RELAY 25
+#define FULL_LED 33
+#define EMPTY_LED 32
 #define I2C_SCL 22
 #define I2C_SDA 21
 
@@ -168,8 +170,12 @@ void setup()
   // Debug console
   Serial.begin(115200);
   pinMode(BUTTON_PIN, INPUT_PULLUP);
-  pinMode(RELAY_PIN, OUTPUT);
-  digitalWrite(RELAY_PIN, LOW);
+  pinMode(PUMP_RELAY, OUTPUT);
+  pinMode(FULL_LED, OUTPUT);
+  pinMode(EMPTY_LED, OUTPUT);
+  digitalWrite(PUMP_RELAY, LOW);
+  digitalWrite(EMPTY_LED, LOW);
+  digitalWrite(FULL_LED, LOW);
   initWiFi();
   Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass);
   timer.setInterval(1000L, updateData);
@@ -196,26 +202,37 @@ void loop()
   }
 
   // Auto mode
-  if ((waterLevel <= LOWER_THRESHOLD))
+  if (waterLevel <= LOWER_THRESHOLD)
   {
-    digitalWrite(RELAY_PIN, HIGH);
+    digitalWrite(PUMP_RELAY, HIGH);
     pumpState = true;
   }
   else if (waterLevel >= UPPER_THRESHOLD)
   {
-    digitalWrite(RELAY_PIN, LOW);
+    digitalWrite(PUMP_RELAY, LOW);
     pumpState = false;
   }
   // Manual mode
   if ((waterLevel <= UPPER_THRESHOLD) && manualState == true)
   {
-    digitalWrite(RELAY_PIN, HIGH);
+    digitalWrite(PUMP_RELAY, HIGH);
     pumpState = true;
   }
   else if ((waterLevel >= UPPER_THRESHOLD) && manualState == true)
   {
-    digitalWrite(RELAY_PIN, LOW);
+    digitalWrite(PUMP_RELAY, LOW);
     manualState = false;
     pumpState = false;
+  }
+  // Water Level State
+  if (waterLevel <= UPPER_THRESHOLD)
+  {
+    digitalWrite(EMPTY_LED, HIGH);
+    digitalWrite(FULL_LED, LOW);
+  }
+  else
+  {
+    digitalWrite(EMPTY_LED, LOW);
+    digitalWrite(FULL_LED, HIGH);
   }
 }
