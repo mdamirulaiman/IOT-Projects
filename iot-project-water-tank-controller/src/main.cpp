@@ -173,9 +173,9 @@ void setup()
   pinMode(PUMP_RELAY, OUTPUT);
   pinMode(FULL_LED, OUTPUT);
   pinMode(EMPTY_LED, OUTPUT);
-  digitalWrite(PUMP_RELAY, LOW);
-  digitalWrite(EMPTY_LED, LOW);
-  digitalWrite(FULL_LED, LOW);
+  digitalWrite(PUMP_RELAY, HIGH);   // Active low relay
+  digitalWrite(EMPTY_LED, HIGH);    // Active low relay
+  digitalWrite(FULL_LED, HIGH);     // Active low relay
   initWiFi();
   Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass);
   timer.setInterval(1000L, updateData);
@@ -204,35 +204,35 @@ void loop()
   // Auto mode
   if (waterLevel <= LOWER_THRESHOLD)
   {
-    digitalWrite(PUMP_RELAY, HIGH);
+    digitalWrite(PUMP_RELAY, LOW);    // Pump ON
     pumpState = true;
   }
   else if (waterLevel >= UPPER_THRESHOLD)
   {
-    digitalWrite(PUMP_RELAY, LOW);
+    digitalWrite(PUMP_RELAY, HIGH);   // Pump OFF
     pumpState = false;
   }
   // Manual mode
   if ((waterLevel <= UPPER_THRESHOLD) && manualState == true)
   {
-    digitalWrite(PUMP_RELAY, HIGH);
+    digitalWrite(PUMP_RELAY, LOW);    // Pump ON
     pumpState = true;
   }
   else if ((waterLevel >= UPPER_THRESHOLD) && manualState == true)
   {
-    digitalWrite(PUMP_RELAY, LOW);
+    digitalWrite(PUMP_RELAY, HIGH);   // Pump OFF
     manualState = false;
     pumpState = false;
   }
   // Water Level State
   if (waterLevel <= UPPER_THRESHOLD)
   {
-    digitalWrite(EMPTY_LED, HIGH);
-    digitalWrite(FULL_LED, LOW);
+    digitalWrite(EMPTY_LED, LOW);     // RED indicator ON
+    digitalWrite(FULL_LED, HIGH);     // Green indicator OFF
   }
   else
   {
-    digitalWrite(EMPTY_LED, LOW);
-    digitalWrite(FULL_LED, HIGH);
+    digitalWrite(EMPTY_LED, HIGH);    // RED indicator OFF
+    digitalWrite(FULL_LED, LOW);      // GREEN indicator ON
   }
 }
